@@ -10,6 +10,11 @@ namespace HTTP_Server
 {
     public class HTTPServer
     {
+        public const String MSG_DIR = "/root/msg";
+        public const String WEB_DIR = "/root/web";
+        public const String VERSION = "HTML/1.1";
+        public const String NAME = "ShohruhRed HTTP Server v0.1";
+
         private int port;
         private bool running = false;
 
@@ -58,7 +63,12 @@ namespace HTTP_Server
                 msg += $"{reader.ReadLine()}\n";
             }
 
+
             Console.WriteLine($"Request: \n{msg}");
+
+            Request req = Request.GetRequest(msg);
+            Response resp = Response.From(req);
+            resp.Post(client.GetStream());
 
         }
     }
